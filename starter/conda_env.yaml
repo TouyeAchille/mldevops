@@ -11,6 +11,7 @@ dependencies:
   - pip
   - pip:
       - fastapi[standard]
+      - pre-commit
       - mlflow==2.20.0
       - numpy==1.26.4
       - pandas==2.2.3
