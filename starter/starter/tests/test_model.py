@@ -1,8 +1,9 @@
-
 from ml.model import compute_model_metrics, train_model, inference
 
+
 def test_train_model():
-    pass   
+    pass
+
 
 def test_compute_model_metrics():
     y_true = [0, 1, 0, 0, 1, 0]

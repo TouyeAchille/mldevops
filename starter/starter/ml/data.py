@@ -3,9 +3,15 @@ from sklearn.preprocessing import LabelBinarizer, OneHotEncoder, StandardScaler
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True,  lb=None, encoder=None,scaler=None
+    X,
+    categorical_features=[],
+    label=None,
+    training=True,
+    lb=None,
+    encoder=None,
+    scaler=None,
 ):
-    """ Process the data used in the machine learning pipeline.
+    """Process the data used in the machine learning pipeline.
 
     Processes the data using one hot encoding for the categorical features and a
     label binarizer for the labels. This can be used in either training or
@@ -45,8 +51,8 @@ def process_data(
     """
 
     # Stripping whitespace from column names
-    X.columns=X.columns.str.strip()
-    
+    X.columns = X.columns.str.strip()
+
     if label is not None:
         y = X[label]
         X = X.drop([label], axis=1)
@@ -54,14 +60,13 @@ def process_data(
         y = np.array([])
 
     X_categorical = X[categorical_features].values
-    X_continuous  = X.drop(*[categorical_features], axis=1)
+    X_continuous = X.drop(*[categorical_features], axis=1)
 
-    
     if training:
         scaler = StandardScaler()
-        encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore") 
+        encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
         lb = LabelBinarizer()
-        
+
         X_continuous = scaler.fit_transform(X_continuous)
         X_categorical = encoder.fit_transform(X_categorical)
         y = lb.fit_transform(y.values).ravel()
@@ -73,7 +78,6 @@ def process_data(
         # Catch the case where y is None because we're doing inference.
         except AttributeError:
             pass
-        
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb, scaler

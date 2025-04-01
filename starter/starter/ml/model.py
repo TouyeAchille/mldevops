@@ -20,25 +20,25 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     # create classifier model
-    #clf_model=LogisticRegression(penalty="l2", C=1.0, n_jobs=-1, random_state=42, solver="lbfgs",max_iter=100)
+    # clf_model=LogisticRegression(penalty="l2", C=1.0, n_jobs=-1, random_state=42, solver="lbfgs",max_iter=100)
 
-    clf_model=MLPClassifier(hidden_layer_sizes=(32,), 
-                                           activation='relu',
-                                           solver='adam',  
-                                           batch_size='auto', 
-                                           learning_rate='constant', 
-                                           learning_rate_init=0.001,  
-                                           max_iter=200, 
-                                           shuffle=False, 
-                                           random_state=42, 
-                                           early_stopping=True
-                                         )
-    
+    clf_model = MLPClassifier(
+        hidden_layer_sizes=(32,),
+        activation="relu",
+        solver="adam",
+        batch_size="auto",
+        learning_rate="constant",
+        learning_rate_init=0.001,
+        max_iter=200,
+        shuffle=False,
+        random_state=42,
+        early_stopping=True,
+    )
+
     # Train model
     clf_model.fit(X_train, y_train)
-    
-    return clf_model
 
+    return clf_model
 
 
 def compute_model_metrics(y, preds):
@@ -64,11 +64,11 @@ def compute_model_metrics(y, preds):
 
 
 def inference(model, X):
-    """ Run model inferences and return the predictions.
+    """Run model inferences and return the predictions.
 
     Inputs
     ------
-    model : 
+    model :
         Trained machine learning model.
     X : np.array
         Data used for prediction.
@@ -77,7 +77,7 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    
-    preds=model.predict(X)
+
+    preds = model.predict(X)
 
     return preds

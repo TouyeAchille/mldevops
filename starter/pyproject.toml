@@ -2,29 +2,29 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
 name = "starter"
 version = "0.0.1"
-requires-python=">=3.10,<3.12'
+requires-python=">=3.10,<3.12"
 readme ="README.md"
 license = {file = "LICENSE"}
 description="ml pipeline to develop a classification model on publicly available Census Bureau data"
 keywords = ["scikit-learn", "ml", "python", "ml pipeline", "fastapi"]
-authors=[{name='Achille Mbogol Touye Junior', email='touyejunior@gmail.com'}]
+authors=[{name="Achille Mbogol Touye Junior", email="touyejunior@gmail.com"}]
 dependencies = [
      "requests",
      "uvicorn",
      "gunicorn",
-     "mlflow==2.20.0",
+     "fastapi[standard]",
+     "mlflow==2.21.1",
      "numpy==1.26.4",
      "pandas==2.2.3",
      "fastapi==0.115.11",
      "pytest==8.3.5",
-     "dvc==3.59.1" ;
-     "scikit-learn==1.6.1" 
+     "dvc==3.59.1" ,
+     "scikit-learn==1.6.1"
 ]
 
 [tool.setuptools]
-packages = ["starter.starter", "starter.starter.ml"]
+packages = ["starter.starter", "starter.starter.ml", "starter.starter.tests"]
 package-dir = {"" = "starter"}
