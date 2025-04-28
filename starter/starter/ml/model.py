@@ -1,5 +1,6 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
-from sklearn.linear_model import LogisticRegression
+
+# from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 
 

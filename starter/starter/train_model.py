@@ -14,6 +14,7 @@ df = pd.read_csv(
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(df, test_size=0.20, random_state=42, shuffle=True)
 
+# Define the categorical features
 cat_features = [
     "workclass",
     "education",
@@ -32,7 +33,7 @@ X_train, y_train, encoder, lb, scaler = process_data(
 )
 
 # Proces the test data with the process_data function.
-X_test, y_test, encoder, lb, scaler = process_data(
+X_test, y_test, encoders, lbs, scalers = process_data(
     test,
     categorical_features=cat_features,
     label="salary",
@@ -43,7 +44,7 @@ X_test, y_test, encoder, lb, scaler = process_data(
 )
 
 
-# Train model
+# Train mod
 print("Training model...")
 clf_model = train_model(X_train, y_train)
 print("Training model finish...")
@@ -75,36 +76,44 @@ print(f"Recall: {recall2}")
 print(f"F1: {fbeta2}")
 
 
-def save_pickle(file_path):
+def save_pickle(file_path, objet_to_save):
+    """
+    Save the object to a pickle file."""
     with open(file_path, "wb") as file:
-        pickle.dump(clf_model, file)
+        pickle.dump(objet_to_save, file)
 
 
 # save model
-filename = (
+path_to_save_model = (
     "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/clf_model.pkl"
 )
-save_pickle(filename)
+save_pickle(path_to_save_model, clf_model)
 print()
 print("=" * 10)
-print(f"Model saved at {filename}")
+print(f"Model saved at {path_to_save_model}")
 
-# save encoder, lb and scaler
-filename = (
+# save encoder
+path_to_save_encoder = (
     "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/encoder.pkl"
 )
-save_pickle(filename)
+save_pickle(path_to_save_encoder, encoder)
 print("=" * 10)
-print(f"Encoder saved at {filename}")
+print(f"Encoder saved at {path_to_save_encoder}")
 
-
-filename = "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/lb.pkl"
-save_pickle(filename)
+# save label binarizer
+path_to_save_lb = (
+    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/lb.pkl"
+)
+save_pickle(path_to_save_lb, lb)
 print("=" * 10)
-print(f"lb saved at {filename}")
+print(f"lb saved at {path_to_save_lb}")
 
-
-filename = "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/scaler.pkl"
-save_pickle(filename)
+# save scaler
+path_to_save_scaler = (
+    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/scaler.pkl"
+)
+save_pickle(path_to_save_scaler, scaler)
 print("=" * 10)
-print(f"scaler saved at {filename}")
+print(f"scaler saved at {path_to_save_scaler}")
+print("=" * 10)
+print("Model training and saving completed.")

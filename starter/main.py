@@ -4,7 +4,9 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from starter.ml.data import process_data
-from starter.ml.model import compute_model_metrics, inference
+from starter.ml.model import inference
+
+# from fastapi.responses import RedirectResponse
 
 
 # data model
@@ -17,16 +19,37 @@ class Input_Features(BaseModel):
     relationship: str
     race: str
     sex: str
+    native_country: str = Field(..., alias="native-country")
     age: int
+    fnlgt: int
+    education_num: int = Field(..., alias="education-num")
     capital_gain: int = Field(..., alias="capital-gain")
     capital_loss: int = Field(..., alias="capital-loss")
     hours_per_week: int = Field(..., alias="hours-per-week")
-    native_country: str = Field(..., alias="native-country")
-    education_num: int = Field(..., alias="education-num")
-    fnlwgt: int
 
-    class Config:
-        populate_by_name = True  # Allows aliasing (useful for column names with dashes)
+    # examples of the data app can receive.
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "age": 50,
+                    "workclass": " Self-emp-not-inc",
+                    "fnlgt": 83311,
+                    "education": " Bachelors",
+                    "education-num": 13,
+                    "marital-status": " Married-civ-spouse",
+                    "occupation": " Exec-managerial",
+                    "relationship": " Husband",
+                    "race": " White",
+                    "sex": " Male",
+                    "capital-gain": 0,
+                    "capital-loss": 0,
+                    "hours-per-week": 13,
+                    "native-country": " United-States",
+                }
+            ]
+        }
+    }
 
 
 cat_features = [
@@ -50,42 +73,38 @@ def load_pickle(file_path):
         raise HTTPException(status_code=500, detail=f"Error: {file_path} not found!")
 
 
+# Load the model
 model = load_pickle(
     "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/clf_model.pkl"
 )
+
+# Load the encoder and scaler
 encoder = load_pickle(
     "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/encoder.pkl"
 )
+
+# Load the label binarizer and scaler
 lb = load_pickle(
     "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/lb.pkl"
 )
+
+# Load the scaler
 scaler = load_pickle(
     "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/scaler.pkl"
 )
 
-# create the FastAPI app
-app = FastAPI()
 
-# Define the root endpoint
-# This is the main entry point of the API
-# It returns a welcome message
-# when the root URL ("/") is accessed
+# create the FastAPI app
+app = FastAPI(
+    title="Census Income Prediction API",
+    description="API for predicting income based on census data.",
+    version="1.0.0",
+)
 
 
 @app.get("/")
 async def root():
-    return {
-        "message": """Welcome to machine learning devops project: The goal is to develop a classification model on publicly available Census Bureau data and
-                          create unit tests to monitor the model performance on various data slices. Then, deploy model using the FastAPI package and create API tests.
-                          The slice validation and the API tests will be incorporated into a CI/CD framework using GitHub Actions
-            """
-    }
-
-
-# Define the inference endpoint
-# This endpoint is used to make predictions using the trained model
-# It accepts a POST request with input features in JSON format
-# The input features are validated using the Input_Features model
+    return {"message": "Welcome to the Census Income Prediction API!"}
 
 
 @app.post("/predict")
@@ -94,20 +113,28 @@ async def predict(input_features: Input_Features):
     Predict the salary based on input features.
     """
     try:
-        # Convert data model to  dataframe
+        # Convert Pydantic model to dataframe
         input_dict = input_features.model_dump(by_alias=True)
-        # input_df = pd.DataFrame([input_dict])
+        df = pd.DataFrame([input_dict])
 
-        # process input data
-        # X, _, _, _ = process_data(
-        # input_df, categorical_features=cat_features, label="salary",
-        # training=False, encoder=encoder, lb=lb, scaler=scaler
-        # )
+        # Preprocess input data
+        X, _y, _encoder, lbz, _scaler = process_data(
+            df,
+            categorical_features=cat_features,
+            label=None,
+            training=False,
+            encoder=encoder,
+            lb=lb,
+            scaler=scaler,
+        )
 
-        # predict
-        # prediction = inference(model, X)
+        # Predict
+        prediction = inference(model, X)
 
-        return input_features  # prediction.tolist()}
+        return {
+            "salary_prediction": prediction.tolist(),
+            "salary_prediction_label": lb.inverse_transform(prediction).tolist(),
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -28,4 +28,4 @@ repos:
       entry: pytest
       language: system
       types: [python]
-      args: [starter/tests]
+      args: [starter/starter/tests]
