@@ -1,7 +1,7 @@
 [project]
 name = "starter"
 version = "1.0.0"
-requires-python=">=3.10,<3.12"
+requires-python=">=3.9,<3.13"
 readme = "README.md"
 license = "MIT"
 description="AI ML pipeline with FastAPI"
