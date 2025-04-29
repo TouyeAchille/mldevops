@@ -19,10 +19,12 @@ jobs:
 
     - name: Install dependencies
       run: |
+        cd starter
         python -m pip install --upgrade pip
         pip install -e .
         pip install pre-commit
 
     - name: Run pre-commit hooks (pytest and flake8)
       run: |
+        cd starter
         pre-commit run --all-files
