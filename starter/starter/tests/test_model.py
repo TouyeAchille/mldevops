@@ -13,6 +13,15 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO)
 
 
+current_dir = Path(__file__).resolve().parent
+
+
+@pytest.fixture
+def file_path():
+    return os.path.join(current_dir.parent.parent, "model", "clf_model.pkl")
+
+
+@pytest.fixture
 def load_pickle(file_path):
     try:
         with open(file_path, "rb") as f:
@@ -27,10 +36,8 @@ def load_pickle(file_path):
         raise RuntimeError(f"Unexpected error while loading '{file_path}': {str(e)}")
 
 
-current_dir = Path(__file__).resolve().parent
-
 # Load the model
-model = load_pickle(os.path.join(current_dir.parent.parent, "model", "clf_model.pkl"))
+# model = load_pickle(os.path.join(current_dir.parent.parent, "model", "clf_model.pkl"))
 
 
 @pytest.fixture
@@ -90,12 +97,15 @@ def test_train_model(load_split_data):
     assert hasattr(model, "predict")
 
 
-def test_compute_metrics(load_split_data):
+def test_compute_metrics(load_split_data, load_pickle):
     """
     Test the compute_model_metrics function with a sample input.
     """
     # Sample input data
     X_train, y_train, X_test, y_test = load_split_data
+
+    # Load the model
+    model = load_pickle
 
     assert X_train.shape[1] == X_test.shape[1]
     assert X_train.shape[0] == y_train.shape[0]
@@ -131,11 +141,14 @@ def test_compute_metrics(load_split_data):
     assert 0 <= test_fbeta <= 1
 
 
-def test_inference(load_split_data):
+def test_inference(load_split_data, load_pickle):
     """Test the inference function with a sample input."""
 
     # Sample input data
     X_train, y_train, X_test, y_test = load_split_data
+
+    # Load the model
+    model = load_pickle
 
     # Predict
     train_pred = inference(model, X_train)
