@@ -2,7 +2,7 @@ name: Pytest and flake8
 
 on:
   push:
-    branches: [main]
+    branches: [mmaster]
 jobs:
   build:
     runs-on: ubuntu-latest
