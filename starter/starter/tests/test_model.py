@@ -7,6 +7,9 @@ import pytest
 import pandas as pd
 import numpy as np
 
+import os
+from pathlib import Path
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -24,10 +27,10 @@ def load_pickle(file_path):
         raise RuntimeError(f"Unexpected error while loading '{file_path}': {str(e)}")
 
 
+current_dir = Path(__file__).resolve().parent
+
 # Load the model
-model = load_pickle(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/clf_model.pkl"
-)
+model = load_pickle(os.path.join(current_dir.parent.parent, "model", "clf_model.pkl"))
 
 
 @pytest.fixture
@@ -36,7 +39,7 @@ def load_split_data():
     Load the data for testing.
     """
     df = pd.read_csv(
-        "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/data/census.csv"
+        os.path.join(current_dir.parent.parent, "data", "census.csv")
     ).sample(15_000, random_state=42)
 
     train, test = train_test_split(df, test_size=0.20, random_state=42, shuffle=True)

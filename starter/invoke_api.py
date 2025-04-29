@@ -3,14 +3,17 @@ import pandas as pd
 # import requests
 # import json
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+# retrieve the base directory
+base_dir = os.path.dirname(__file__)
+
 # load the data
-df = pd.read_csv(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/data/census.csv"
-)
+df = pd.read_csv(os.path.join(base_dir, "data", "census.csv"))
+
 df.columns = df.columns.str.strip()
 df = df.drop(columns=["salary"])
 

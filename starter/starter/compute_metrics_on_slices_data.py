@@ -3,6 +3,8 @@ import pandas as pd
 from ml.data import process_data
 from ml.model import compute_model_metrics, inference
 import logging
+import os
+from pathlib import Path
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -22,33 +24,25 @@ def load_pickle(file_path):
         raise RuntimeError(f"Unexpected error while loading '{file_path}': {str(e)}")
 
 
-# load the data
-df = pd.read_csv(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/data/census.csv"
-)
+# retrieve the base directory
+base_dir = Path(__file__).resolve().parent
 
+# load the data
+df = pd.read_csv(os.path.join(base_dir.parent, "data", "census.csv"))
 df.columns = df.columns.str.strip()
 
 
 # load the model
-model = load_pickle(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/clf_model.pkl"
-)
+model = load_pickle(os.path.join(base_dir.parent, "model", "clf_model.pkl"))
 
 # load the encoder
-encoder = load_pickle(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/encoder.pkl"
-)
+encoder = load_pickle(os.path.join(base_dir.parent, "model", "encoder.pkl"))
 
 # load the label binarizer and scaler
-lb = load_pickle(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/lb.pkl"
-)
+lb = load_pickle(os.path.join(base_dir.parent, "model", "lb.pkl"))
 
 # load the scaler
-scaler = load_pickle(
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/scaler.pkl"
-)
+scaler = load_pickle(os.path.join(base_dir.parent, "model", "scaler.pkl"))
 
 
 # Define categorical features
@@ -72,9 +66,7 @@ def compute_metrics_on_slices(slicing_feature):
 
     slices_results = {}
 
-    df = pd.read_csv(
-        "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/data/census.csv"
-    )
+    df = pd.read_csv(os.path.join(base_dir.parent, "data", "census.csv"))
     df.columns = df.columns.str.strip()
 
     # Define categorical features
@@ -119,7 +111,7 @@ def compute_metrics_on_slices(slicing_feature):
         }
 
     pd.DataFrame.from_dict(slices_results, orient="index").to_csv(
-        "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/slices_output_metrics.csv"
+        os.path.join(base_dir, "slices_output_metrics.csv")
     )
 
     return precision, recall, fbeta
