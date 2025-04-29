@@ -29,3 +29,4 @@ repos:
       language: system
       types: [python]
       args: [starter/starter/tests, -vv]
+      exclude: starter/model/model.pkl
