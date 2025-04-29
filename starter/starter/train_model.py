@@ -83,34 +83,26 @@ def save_pickle(file_path, objet_to_save):
 
 
 # save model
-path_to_save_model = (
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/clf_model.pkl"
-)
+path_to_save_model = os.path.join(current_dir.parent, "model", "model.pkl")
 save_pickle(path_to_save_model, clf_model)
 print()
 print("=" * 10)
 print(f"Model saved at {path_to_save_model}")
 
 # save encoder
-path_to_save_encoder = (
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/encoder.pkl"
-)
+path_to_save_encoder = os.path.join(current_dir.parent, "model", "encoder.pkl")
 save_pickle(path_to_save_encoder, encoder)
 print("=" * 10)
 print(f"Encoder saved at {path_to_save_encoder}")
 
 # save label binarizer
-path_to_save_lb = (
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/lb.pkl"
-)
+path_to_save_lb = os.path.join(current_dir.parent, "model", "lb.pkl")
 save_pickle(path_to_save_lb, lb)
 print("=" * 10)
 print(f"lb saved at {path_to_save_lb}")
 
 # save scaler
-path_to_save_scaler = (
-    "/Users/achillejuniormbogoltouye/Documents/mldevops/starter/model/scaler.pkl"
-)
+path_to_save_scaler = os.path.join(current_dir.parent, "model", "scaler.pkl")
 save_pickle(path_to_save_scaler, scaler)
 print("=" * 10)
 print(f"scaler saved at {path_to_save_scaler}")
