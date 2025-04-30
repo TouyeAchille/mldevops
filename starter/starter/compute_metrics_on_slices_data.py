@@ -1,7 +1,7 @@
 import pickle
 import pandas as pd
-from ml.data import process_data
-from ml.model import compute_model_metrics, inference
+from starter.ml.data import process_data
+from starter.ml.model import compute_model_metrics, inference
 import logging
 import os
 from pathlib import Path
