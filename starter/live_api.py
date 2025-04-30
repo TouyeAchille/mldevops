@@ -1,7 +1,6 @@
 import pandas as pd
-
-# import requests
-# import json
+import requests
+import json
 import logging
 import os
 
@@ -27,11 +26,12 @@ logger.info(f"Data to be sent: {data}")
 url = "http://127.0.0.1:8000/predict"
 
 # Send a POST request to the API
-# response = requests.post(url, data=json.dumps(data))
+response = requests.post(url, data=json.dumps(data))
 
 
 # Check the response status code
-# if response.status_code == 200:
-# logger.info("Prediction successful!")
-# prediction = response.json()
-# print((prediction))
+print(response.status_code == 200)
+logger.info("Prediction successful!")
+
+prediction = response.json()
+print((prediction))

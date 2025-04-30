@@ -13,6 +13,7 @@ dependencies = [
      "gunicorn",
      "pytest",
      "httpx",
+     "poetry",
      "fastapi",
      "pre-commit",
      "black",
@@ -26,14 +27,21 @@ dependencies = [
      "scikit-learn==1.6.1"
 ]
 
-[tool.setuptools.packages.find]
-where = ["starter"]
-exclude = ["tests*"]
+#[tool.setuptools.packages.find]
+#where = ["starter"]
+#exclude = ["tests*"]
 
-[tool.pytest.ini_options]
-testpaths = ["starter/tests"]
+[tool.poetry]
+packages = [
+    {include = "starter"},
+]
+exclude= ["starter/tests/*.py", "starter/model/*.pkl"]
 
 
 [build-system]
-requires = ["setuptools>=77.0.3"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+#[build-system]
+#requires = ["setuptools>=77.0.3"]
+#build-backend = "setuptools.build_meta"

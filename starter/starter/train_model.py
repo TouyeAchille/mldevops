@@ -3,8 +3,8 @@ import pandas as pd
 import os
 import pickle
 from sklearn.model_selection import train_test_split
-from ml.data import process_data
-from ml.model import compute_model_metrics, train_model, inference
+from starter.ml.data import process_data
+from starter.ml.model import compute_model_metrics, train_model, inference
 from pathlib import Path
 
 current_dir = Path(__file__).resolve().parent
