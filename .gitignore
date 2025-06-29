@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-starter/model/model.pkl
+*.pkl
 __pycache__/
 *.py[cod]
 *$py.class
