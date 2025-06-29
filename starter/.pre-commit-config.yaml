@@ -28,4 +28,4 @@ repos:
       language: system
       types: [python]
       args: [starter/starter/tests, -vv]
-      exclude: starter/model/model.pkl
+      exclude: 'starter/(model/model\.pkl|live_api\.py)$'

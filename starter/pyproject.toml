@@ -35,7 +35,7 @@ dependencies = [
 packages = [
     {include = "starter"},
 ]
-exclude= ["starter/tests/*.py", "starter/model/*.pkl"]
+exclude= ["starter/tests/*.py", "starter/model/*.pkl", "starter/live_api.py"]
 
 [tool.pytest.ini_options]
 pythonpath = ["starter"]
