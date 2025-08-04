@@ -23,7 +23,7 @@ logger.info(f"Data to be sent: {data}")
 
 
 # Define the endpoint URL
-url = "http://127.0.0.1:8000/predict"
+url = "http://127.0.0.1:8080/predict"
 
 # Send a POST request to the API
 response = requests.post(url, data=json.dumps(data))

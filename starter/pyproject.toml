@@ -12,6 +12,7 @@ dependencies = [
      "uvicorn",
      "gunicorn",
      "pytest",
+     "poetry-plugin-export",
      "httpx",
      "poetry",
      "fastapi",

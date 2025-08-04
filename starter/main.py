@@ -2,11 +2,15 @@
 import pickle
 import pandas as pd
 from pathlib import Path
-import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from starter.ml.data import process_data
 from starter.ml.model import inference
+
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 # data model
@@ -76,18 +80,17 @@ def load_pickle(file_path):
         raise HTTPException(status_code=500, detail=f"Error: {file_path} not found!")
 
 
-# Load the model
-model = load_pickle(os.path.join(base_dir, "model", "clf_model.pkl"))
+def load_all_models(model_dir: Path):
+    return {
+        "model": load_pickle(model_dir / "clf_model.pkl"),
+        "encoder": load_pickle(model_dir / "encoder.pkl"),
+        "lb": load_pickle(model_dir / "lb.pkl"),
+        "scaler": load_pickle(model_dir / "scaler.pkl"),
+    }
 
-# Load the encoder and scaler
-encoder = load_pickle(os.path.join(base_dir, "model", "encoder.pkl"))
 
-# Load the label binarizer and scaler
-lb = load_pickle(os.path.join(base_dir, "model", "lb.pkl"))
-
-# Load the scaler
-scaler = load_pickle(os.path.join(base_dir, "model", "scaler.pkl"))
-# Load the encoder and scaler
+models = load_all_models(base_dir / "model")
+model, encoder, lb, scaler = models.values()
 
 
 # create the FastAPI app
@@ -109,6 +112,8 @@ async def predict(input_features: Input_Features):
     Predict the salary based on input features.
     """
     try:
+
+        logger.info("Received input: %s", input_features.model_dump())
         # Convert Pydantic model to dataframe
         input_dict = input_features.model_dump(by_alias=True)
         df = pd.DataFrame([input_dict])
@@ -134,3 +139,6 @@ async def predict(input_features: Input_Features):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# if __name__=="__main__":
