@@ -12,6 +12,7 @@ dependencies:
   - pip:
       - httpx
       - pytest
+      - poetry
       - poetry-plugin-export
       - fastapi
       - fastapi[standard]
