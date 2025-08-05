@@ -1,14 +1,15 @@
-from starter.ml.model import compute_model_metrics, inference, train_model
-from starter.ml.data import process_data
-from sklearn.model_selection import train_test_split
-import pickle
 import logging
-import pytest
-import pandas as pd
-import numpy as np
-
 import os
+import pickle
 from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import pytest
+from sklearn.model_selection import train_test_split
+
+from starter.ml.data import process_data
+from starter.ml.model import compute_model_metrics, inference, train_model
 
 logging.basicConfig(level=logging.INFO)
 

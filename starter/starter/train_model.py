@@ -1,11 +1,13 @@
 # Script to train machine learning model.
-import pandas as pd
 import os
 import pickle
-from sklearn.model_selection import train_test_split
-from starter.ml.data import process_data
-from starter.ml.model import compute_model_metrics, train_model, inference
 from pathlib import Path
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+from starter.ml.data import process_data
+from starter.ml.model import compute_model_metrics, inference, train_model
 
 current_dir = Path(__file__).resolve().parent
 # load in the data

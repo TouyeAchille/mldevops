@@ -1,13 +1,14 @@
 # Put the code for your API here.
+import logging
 import pickle
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+
 from starter.ml.data import process_data
 from starter.ml.model import inference
-
-import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

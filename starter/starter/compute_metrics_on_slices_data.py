@@ -1,10 +1,12 @@
-import pickle
-import pandas as pd
-from starter.ml.data import process_data
-from starter.ml.model import compute_model_metrics, inference
 import logging
 import os
+import pickle
 from pathlib import Path
+
+import pandas as pd
+
+from starter.ml.data import process_data
+from starter.ml.model import compute_model_metrics, inference
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
