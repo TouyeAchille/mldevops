@@ -21,7 +21,8 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     # create classifier model
-    # clf_model=LogisticRegression(penalty="l2", C=1.0, n_jobs=-1, random_state=42, solver="lbfgs",max_iter=100)
+    # clf_model=LogisticRegression(penalty="l2", C=1.0, n_jobs=-1,
+    # random_state=42, solver="lbfgs",max_iter=100)
 
     clf_model = MLPClassifier(
         hidden_layer_sizes=(32,),
