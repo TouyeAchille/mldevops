@@ -1,7 +1,10 @@
 name: fastapi
 services:
   mlapp:
+    container_name: fastapi_mlapp
     build:
       context: .
     ports:
-      - 8080:8080
+      - "${PORT:-8000}:${PORT:-8000}"  # par défaut 8000 si PORT non défini
+    environment:
+      - PORT=${PORT:-8000}
