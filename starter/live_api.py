@@ -1,8 +1,10 @@
-import pandas as pd
-import requests
+import argparse
 import json
 import logging
 import os
+
+import pandas as pd
+import requests
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -21,9 +23,13 @@ df = df.drop(columns=["salary"])
 data = df.iloc[1].to_dict()
 logger.info(f"Data to be sent: {data}")
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--host", default="127.0.0.1")
+parser.add_argument("--port", default=8000, type=int)
+args = parser.parse_args()
 
 # Define the endpoint URL
-url = "http://127.0.0.1:8080/predict"
+url = f"http://{args.host}:{args.port}/predict"
 
 # Send a POST request to the API
 response = requests.post(url, data=json.dumps(data))
