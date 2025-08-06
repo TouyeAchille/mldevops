@@ -18,9 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Wait for GitHub checks CI to pass before deploy
-        run: echo 'The CI workflow passed successfully'
-
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
       - name: Set up Heroku CLI
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
