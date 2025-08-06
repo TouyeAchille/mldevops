@@ -1,0 +1,35 @@
+name: deploy to heroku
+
+# Run workflow on every push to master branch
+# when worflows pyteste and flake8 is complete
+on:
+  workflow_run:
+    workflows: ["Pytest and flake8"]
+    types: [completed]
+    branches:
+        - master
+jobs:
+  deploy:
+    name: Build Docker images with heroku.yml for deployment to Heroku
+    environment: production
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Wait for GitHub checks CI to pass before deploy
+        run: echo 'The CI workflow passed successfully'
+
+      - name: Set up Heroku CLI
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+            heroku_email: ${{ secrets.HEROKU_EMAIL }}
+            usedocker: true
+
+      - name: Build docker image, Push image to heroku container and Deploy to Heroku via git
+        run: |
+            git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+            git push heroku HEAD:master
