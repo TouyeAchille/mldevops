@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd starter
-        python -m pip install --upgrade pip poetry
+        python -m pip instal --upgrade pip poetry
         poetry install
         poetry run pre-commit install
 
