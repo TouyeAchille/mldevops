@@ -21,15 +21,12 @@ jobs:
       - name: Install Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
+
       - name: Set up Heroku CLI
         uses: akhileshns/heroku-deploy@v3.14.15
         with:
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
             heroku_email: ${{ secrets.HEROKU_EMAIL }}
-            usedocker: true
-
-      - name: Build docker image, Push image to heroku container and Deploy to Heroku via git
-        run: |
-            git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-            git push heroku HEAD:master
+            stack: "container"
+            #usedocker: true
