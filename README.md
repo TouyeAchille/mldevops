@@ -1,7 +1,3 @@
----
-noteId: "1a9bb420733811f08b772711d3e2760d"
-tags: []
-
 # Census Income Classification API - MLDevOps Project
 
 In this project, we develop a **classification model** based on **publicly available Census Bureau data**. The pipeline includes:
