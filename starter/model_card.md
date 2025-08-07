@@ -1,9 +1,3 @@
----
-noteId: "df12a190733011f08b772711d3e2760d"
-tags: []
-
----
-
 # Model Card
 
 For additional information see the Model Card paper: https://arxiv.org/pdf/1810.03993.pdf
@@ -244,15 +238,15 @@ The following evaluation metrics are commonly used to assess the performance of 
 
 The  model's performance on those metrics.
 
-Evaluating model on train data...
-Precision: 0.7297830374753451
-Recall: 0.6491228070175439
-F1: 0.6870937790157846
-==============================
-Evaluating model on test data...
-Precision: 0.7403708987161198
-Recall: 0.6607256524506684
-F1: 0.698284561049445
+> Evaluating model on train data...
+- Precision: 0.7297830374753451
+- Recall: 0.6491228070175439
+- F1: 0.6870937790157846
+
+> Evaluating model on test data...
+- Precision: 0.7403708987161198
+- Recall: 0.6607256524506684
+- F1: 0.698284561049445
 
 ## Ethical Considerations
 
